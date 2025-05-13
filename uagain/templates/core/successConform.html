@@ -1,0 +1,20 @@
+{% extends 'core/base.html' %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmar Aceptación</title>
+</head>
+<body>
+    <h2>¿Seguro que quieres aceptar este producto?</h2>
+    <p>Nombre: {{ producto.nombre }}</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Sí, aceptar</button>
+        <a href="{% url 'products' %}">Cancelar</a>
+    </form>
+
+</body>
+
+
+{% endblock %}

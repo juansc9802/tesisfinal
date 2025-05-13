@@ -1,0 +1,82 @@
+{% extends 'core/base.html' %}
+{% block content %}
+<main class="main">
+    <section class="ecommerce-hero-1 hero section" id="hero">
+      <div class="container">
+        <div class="row align-items-center">
+
+            <h3 class="text-center mb-4">Productos disponibles</h3>
+
+            <div class="row">
+                {% for producto in producto %}
+                 {% if not producto.aceptado %}
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 shadow-sm" style="background-color: #087a6c;">
+                        {% if producto.imagen %}
+                        <img src="{{ producto.imagen.url }}" class="card-img-top img-fluid" alt="{{ producto.nombre }}" style="height: 200px; object-fit: cover;">
+                        {% else %}
+                        <img src="uagain/static/assets/logo.webp" class="card-img-top img-fluid" alt="{{ producto.nombre }}" style="height: 200px; object-fit: cover;">
+                        {% endif %}
+                        <div class="card-body">
+                            <strong><h4 class="card-title" style="color: #f4f1d6;">{{ producto.nombre }}</h5></strong>
+                            <p class="card-text"><strong>Categoría:</strong> {{ producto.categoria.nombre }}</p>
+                            <p class="card-text"><strong>Empresa:</strong> Placeholder</p>
+                            <p class="card-text"><strong>Precio:</strong> ${{ producto.precio|floatformat:0 }}</p>
+                            <p class="card-text"><strong>Publicado por:</strong> {{ producto.creador.username }}</p>
+                            <p class="card-text">Numero de referencia: {{ producto.id }}</p>
+
+                            
+                            {% if request.user.username == producto.creador.username %}
+                                <p class="text-muted">Esta publicación es tuya</p>
+                            {% else %}
+                                <div class="d-flex justify-content-between">
+                                    <form action="{% url 'create_checkout_session' %}" method="POST">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="producto_id" value="{{ producto.id }}">
+                                        <button type="submit" class="btn custom-btn">Aceptar</button>
+                                    </form>
+                                    <a href="{% url 'chat_usuario' producto.creador.username %}" class="btn custom-btn">
+                                        Contactar vendedor
+                                    </a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% empty %}
+            <div class="col-12 text-center">
+                <p class="text-muted">No hay productos disponibles en esta categoría.</p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+</div>
+</div>
+</main>
+
+<style>
+    .custom-btn {
+        background-color: #FFEE8C;
+        color: black;
+        border: none;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .custom-btn:hover {
+        background-color: #c9d63e;
+        transform: scale(1.05);
+    }
+
+    .custom-btn:active {
+        background-color: #b0bc35;
+        transform: scale(0.95);
+    }
+    .card-body {
+        color: white;
+    }
+</style>
+
+
+
+{% endblock %}

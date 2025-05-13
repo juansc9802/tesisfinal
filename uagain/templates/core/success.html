@@ -1,0 +1,20 @@
+{% extends 'core/base.html' %}
+{% block content %}
+<h3>casita</h3>
+
+
+{% if request.user.is_authenticated %}
+{{ user.username | upper }}, Pagaste con exito!!!!!
+{% else %}
+Ingresa o registrate por favor!
+{% endif %}
+
+
+<ul>
+    {% for categoria in producto %}
+        <li>{{ categoria }}</li>  <!-- Si no funciona .nombre, prueba sin él -->
+    {% endfor %}
+</ul>
+
+
+{% endblock %}

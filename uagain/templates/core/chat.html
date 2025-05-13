@@ -1,0 +1,49 @@
+{% extends 'core/base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <h3 class="text-center mb-4">Chat con {{ receptor.username }}</h3>
+
+    <div class="card mb-4 shadow-sm">
+        <div id="contenedor-mensajes" class="card-body" style="max-height: 400px; overflow-y: auto;">
+        </div>
+    </div>
+
+    <form method="POST" class="mb-5">
+        {% csrf_token %}
+        <div class="input-group">
+            <input type="text" name="contenido" class="form-control" placeholder="Escribe tu mensaje..." required>
+            <button class="btn btn-primary" type="submit">Enviar</button>
+        </div>
+    </form>
+
+    <div class="text-center">
+        <a href="{% url 'mis_productos' %}" class="btn btn-secondary">Volver</a>
+    </div>
+</div>
+
+<script>
+    function cargarMensajes() {
+        fetch("/chat/api/mensajes/{{ receptor.id }}/")
+            .then(response => response.json())
+            .then(data => {
+                const contenedor = document.getElementById('contenedor-mensajes');
+                contenedor.innerHTML = '';
+                data.mensajes.forEach(m => {
+                    const div = document.createElement('div');
+                    div.classList.add('mb-2', m.es_emisor ? 'text-end' : 'text-start');
+                    div.innerHTML = `
+                        <div class="p-2 rounded" style="background-color: ${m.es_emisor ? '#D4EDDA' : '#F8D7DA'}; display: inline-block;">
+                            <strong>${m.emisor}</strong><br>${m.contenido}
+                            <div class="text-muted small">${m.fecha}</div>
+                        </div>
+                    `;
+                    contenedor.appendChild(div);
+                });
+                contenedor.scrollTop = contenedor.scrollHeight;
+            });
+    }
+
+    setInterval(cargarMensajes, 3000);
+    cargarMensajes();
+</script>
+{% endblock %}

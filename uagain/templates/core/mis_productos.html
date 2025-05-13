@@ -1,0 +1,57 @@
+{% extends 'core/base.html' %}
+{% block content %}
+<div class="container mt-4" style="background-color: #F4EFCF;">
+    <h3 class="text-center mb-4">Productos disponibles</h3>
+
+    <div class="row">
+        {% for producto in producto %}
+        {% if not producto.aceptado %}
+            {% if request.user.username == producto.creador.username %}
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 shadow-sm" style="background-color: #4FA46A;">
+                        {% if producto.imagen %}
+                        <img src="{{ producto.imagen.url }}" class="card-img-top img-fluid" alt="{{ producto.nombre }}" style="height: 200px; object-fit: cover;">
+                        {% else %}
+                        <img src="uagain/static/assets/logo.webp" class="card-img-top img-fluid" alt="{{ producto.nombre }}" style="height: 200px; object-fit: cover;">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ producto.nombre }}</h5>
+                            <p class="card-text"><strong>Categoría:</strong> {{ producto.categoria.nombre }}</p>
+                            <p class="card-text"><strong>Empresa:</strong> Placeholder</p>
+                            <p class="card-text"><strong>Precio:</strong> ${{ producto.precio }}</p>
+                            <p class="card-text"><strong>Publicado por:</strong> {{ producto.creador.username }}</p>
+                            
+                            <p class="text-muted">Esta publicación es tuya</p>
+                            <a href="{% url 'editar_producto' producto.id %}" class="btn custom-btn mt-2">Editar publicación</a>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% endif %}
+        {% empty %}
+            <div class="col-12 text-center">
+                <p class="text-muted">No hay productos disponibles en esta categoría.</p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+    .custom-btn {
+        background-color: #DFC72B;
+        color: black;
+        border: none;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .custom-btn:hover {
+        background-color: #c9d63e;
+        transform: scale(1.05);
+    }
+
+    .custom-btn:active {
+        background-color: #b0bc35;
+        transform: scale(0.95);
+    }
+</style>
+{% endblock %}
