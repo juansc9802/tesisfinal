@@ -21,7 +21,11 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.db.models import Q
-
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import update_session_auth_hash
+from django.contrib import messages
+from django.shortcuts import render, redirect
+from .forms import PerfilForm, CustomPasswordChangeForm
 
 # Create your views here.
 
@@ -35,8 +39,9 @@ def home(request):
 @login_required
 def products(request):
     producto = Productos.objects.all()
+    pago_exitoso = request.GET.get('pago') == 'exito'
     print("Hola")
-    return render(request, 'core/products.html', {"producto": producto})
+    return render(request, 'core/products.html', {"producto": producto, 'pago_exitoso': pago_exitoso})
 @login_required
 def mis_productos(request):
     producto = Productos.objects.all()
@@ -108,11 +113,11 @@ def success_view(request):
 
 
 def cancel_view(request):
-    return render(request, 'core/cancel.html')
+    return redirect('/products/?pago=exito')
 
 
 
-
+@login_required
 @csrf_exempt
 def create_checkout_session(request):
     if request.method == 'POST':
@@ -157,16 +162,36 @@ def create_checkout_session(request):
 
 @login_required
 def perfil_usuario(request):
+    user = request.user
     if request.method == 'POST':
-        form = PerfilForm(request.POST, instance=request.user)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Tu perfil ha sido actualizado correctamente.')
-            return redirect('perfil_usuario')
+        if 'cambiar_perf' in request.POST:
+            form = PerfilForm(request.POST, instance=user)
+            password_form = CustomPasswordChangeForm(user)
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'Tu perfil ha sido actualizado correctamente.')
+                return redirect('perfil_usuario')
+        elif 'cambiar_contr' in request.POST:
+            form = PerfilForm(instance=user)
+            password_form = CustomPasswordChangeForm(user=user, data=request.POST)
+            if password_form.is_valid():
+                user = password_form.save()
+                update_session_auth_hash(request, user)  # Mantiene la sesión activa
+                messages.success(request, 'Tu contraseña fue cambiada exitosamente.')
+                return redirect('perfil_usuario')
+            else:
+                messages.error(request, 'Por favor corrige los errores en el formulario de contraseña.')
+
     else:
         form = PerfilForm(instance=request.user)
+        password_form = CustomPasswordChangeForm(user)
 
-    return render(request, 'core/perfil_usuario.html', {'form': form})   
+
+    return render(request, 'core/perfil_usuario.html', {
+        'form': form,
+        'password_form': password_form,
+        
+        })   
 
 
 @login_required

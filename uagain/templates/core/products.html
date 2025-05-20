@@ -52,8 +52,25 @@
     </div>
 </div>
 </div>
+
+{% if pago_exitoso %}
+<div id="popup-exito" class="popup">
+  <div class="popup-contenido">
+    <span class="cerrar" onclick="cerrarPopup()">&times;</span>
+    <h2>Algo salio mal! :c</h2>
+    <p>Tu pago fallo, vuelve a intentarlo</p>
+  </div>
 </div>
+<script>
+  function cerrarPopup() {
+    document.getElementById("popup-exito").style.display = "none";
+  }
+</script>
+
+{% endif %}
 </main>
+
+</div>
 
 <style>
     .custom-btn {
@@ -76,7 +93,4 @@
         color: white;
     }
 </style>
-
-
-
 {% endblock %}

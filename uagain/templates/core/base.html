@@ -48,7 +48,7 @@
               <div class="top-bar-item">
                 <i class="bi bi-telephone-fill me-2"></i>
                 <span>Need help? Call us: </span>
-                <a href="tel:+1234567890">+1 (234) 567-890</a>
+                <a href="tel:+57 3236039080">+57 (323) 603-9080</a>
               </div>
             </div>
 
@@ -75,13 +75,6 @@
                   <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">
                     <i class="bi bi-translate me-2"></i>EN
                   </a>
-                  <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#"><i class="bi bi-check2 me-2 selected-icon"></i>English</a>
-                    </li>
-                    <li><a class="dropdown-item" href="#">Español</a></li>
-                    <li><a class="dropdown-item" href="#">Français</a></li>
-                    <li><a class="dropdown-item" href="#">Deutsch</a></li>
-                  </ul>
                 </div>
                 <div class="top-bar-item dropdown">
                   <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">
@@ -153,15 +146,7 @@
               <li><a href="{% url 'products' %}">Productos</a></li>
               {% if request.user.is_authenticated %}
               <li><a href="{% url 'agregar_producto' %}">Agregar productos</a></li>
-              <li><a href="{% url 'exit' %}">Salir</a></li>
-              <li class="dropdown"><a href="#"><span>Menú</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-                <ul>
-                  <li><a href="{% url 'perfil_usuario' %}">Mi perfil</a></li>
-                  <li><a href="{% url 'mis_productos' %}">Mis productos</a></li>
-                  <li><a href="{% url 'lista_chats' %}">Mis chats</a></li>
-                  <li><a href="#" onclick="salir()"> Salir</a> </a></li>
-
-                </ul>
+              <li><a href="{% url 'lista_chats' %}">Mis chats</a></li>
                 {% else %}
               <li><a href="{% url 'login' %}" class="active">Ingresar</a></li>
               <li><a href="{% url 'register' %}" class="active">Registrarse</a></li>

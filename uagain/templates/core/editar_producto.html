@@ -1,12 +1,76 @@
 {% extends 'core/base.html' %}
 {% block content %}
 <div class="container mt-5">
-    <h2>Editar producto</h2>
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Guardar cambios</button>
-        <a href="{% url 'mis_productos' %}" class="btn btn-secondary">Cancelar</a>
-    </form>
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow-lg">
+
+        <!-- Header con color personalizado -->
+        <div class="card-header text-white text-center" style="background-color: #087a6c;">
+          <h4 class="mb-0" style="color: #FFFFFF;" >Hacer cambios en tu producto</h4>
+        </div>
+
+        <div class="card-body">
+          {% if form.errors %}
+            <div class="alert alert-warning">
+              Hay errores en el formulario.
+            </div>
+          {% endif %}
+
+          <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% for field in form %}
+              <div class="mb-3">
+                <label class="form-label">{{ field.label }}</label>
+                {{ field }}
+
+                {% if field.help_text %}
+                  <small class="form-text text-muted">{{ field.help_text }}</small>
+                {% endif %}
+
+                {% if field.errors %}
+                  <div class="text-danger small mt-1">
+                    {{ field.errors.0 }}
+                  </div>
+                {% endif %}
+              </div>
+            {% endfor %}
+
+            <!-- Botón con color personalizado -->
+            <button type="submit" class="btn custom-btn w-100 " style="color: #FFFFFF;">Guardar cambios</button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
 </div>
+
+<style>
+  input,
+  select,
+  textarea {
+    width: 100% !important;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+
+  .custom-btn {
+    background-color: #087a6c; /* amarillo pastel */
+    color: black;
+    border: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+
+  .custom-btn:hover {
+    background-color: #c9d63e;
+    transform: scale(1.05);
+  }
+
+  .custom-btn:active {
+    background-color: #b0bc35;
+    transform: scale(0.95);
+  }
+</style>
 {% endblock %}

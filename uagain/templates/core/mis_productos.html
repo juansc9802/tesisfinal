@@ -5,14 +5,16 @@
         <div class="container">
             <div class="row align-items-center">
                 {% if not producto %}
-                <p class= "card-text"> No tienes productos</p>
+                <p class="card-text"> No tienes productos</p>
                 {% else %}
+                 <h3 class="text-center mb-4">Tus publicaciones</h3>
+                
                 <div class="row">
                     {% for producto in producto %}
                     {% if not producto.aceptado %}
                     {% if request.user.username == producto.creador.username %}
                     <div class="col-md-4 mb-4">
-                        <div class="card h-100 shadow-sm" style="background-color: #4FA46A;">
+                        <div class="card h-100 shadow-sm" style="background-color: #087a6c;">
                             {% if producto.imagen %}
                             <img src="{{ producto.imagen.url }}" class="card-img-top img-fluid"
                                 alt="{{ producto.nombre }}" style="height: 200px; object-fit: cover;">
@@ -68,6 +70,7 @@
                 color: white;
             }
         </style>
+
 
         </style>
         {% endblock %}

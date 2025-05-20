@@ -10,24 +10,58 @@
 <body class="bg-light">
 <div class="container mt-5">
     <div class="card shadow-sm">
-        <div class="card-header bg-primary text-white">
-            <h4 class="mb-0">Mi Perfil</h4>
+        <div class="card-header text-white text-center" style="background-color: #087a6c;">
+          <h4 class="mb-0" style="color: #FFFFFF;" >Editar Perfil</h4>
         </div>
-        <div class="card-body">
+
+        <div class="card-body" >
+            
+            <h2>Editar perfil</h2>
             {% if messages %}
                 {% for message in messages %}
                     <div class="alert alert-success">{{ message }}</div>
                 {% endfor %}
             {% endif %}
+
+
             <form method="POST">
                 {% csrf_token %}
                 {{ form.as_p }}
-                <button type="submit" class="btn btn-success">Actualizar Perfil</button>
+                <button type="submit" name ="cambiar_perf" class="btn btn-success">Actualizar Perfil</button>
             </form>
+
+            <h3>Cambiar Contraseña</h3>
+            <form method="POST">
+                {% csrf_token %}
+                {{ password_form.as_p }}
+                <button type="submit" name ="cambiar_contr" class="btn btn-success">Cambiar contraseña</button>
+            </form>
+
         </div>
     </div>
 </div>
 </body>
 
+<style>
+    .cambiar_perf {
+        background-color: #FFEE8C;
+        color: black;
+        border: none;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .cambiar_perf:hover {
+        background-color: #c9d63e;
+        transform: scale(1.05);
+    }
+
+    .cambiar_perf:active {
+        background-color: #b0bc35;
+        transform: scale(0.95);
+    }
+    .card-body {
+        color: black;
+    }
+</style>
 
 {% endblock %}
