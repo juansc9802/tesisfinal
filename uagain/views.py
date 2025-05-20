@@ -29,7 +29,7 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 
 def home(request):
     productos = Productos.objects.all()
-    pago_exitoso = request.GET.get('pago') == 'exitoso'
+    pago_exitoso = request.GET.get('pago') == 'exito'
     return render(request, 'core/home.html', {"producto": productos, 'pago_exitoso': pago_exitoso})
 
 @login_required
@@ -121,11 +121,11 @@ def create_checkout_session(request):
             producto = Productos.objects.get(id=producto_id)
 
             # Validar precio mínimo (por ejemplo, 1000 COP)
-            if producto.precio < Decimal('1000.00'):
+            if producto.precio < Decimal('3000.00'):
                 return JsonResponse({'error': 'El precio mínimo para publicar es de $1000 COP'}, status=400)
 
             # Convertir Decimal a entero para Stripe (en centavos)
-            precio_en_cop = int(producto.precio)
+            precio_en_cop = int(producto.precio)*100
 
             checkout_session = stripe.checkout.Session.create(
                 payment_method_types=['card'],
