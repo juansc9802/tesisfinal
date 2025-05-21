@@ -16,7 +16,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.10'  # Usa una versión estable, 3.13 aún no es comúnmente usada en producción
+        python-version: '3.10'  # Ussa una versión estable, 3.13 aún no es comúnmente usada en producción
 
     - name: Install dependencies
       run: |
