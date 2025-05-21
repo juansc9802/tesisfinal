@@ -158,7 +158,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
-#Llaves de pagos stripe
+#Llaves de pagos stripe 2
 
 
 STRIPE_PUBLIC_KEY = env('STRIPE_PUBLIC_KEY')
