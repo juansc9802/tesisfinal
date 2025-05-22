@@ -25,8 +25,9 @@ jobs:
 
     - name: Run collectstatic
       env:
-        DJANGO_SETTINGS_MODULE: tesis.settings  # ajusta si usas otro settings
-        SECRET_KEY: dummy  # necesario si tu settings.py lo exige
+        DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
+        DJANGO_SETTINGS_MODULE: tesis.settings  # Ajusta si usas otro nombre de settings
+        DEBUG: False
       run: |
         python manage.py collectstatic --noinput
 
