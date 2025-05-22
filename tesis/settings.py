@@ -36,7 +36,7 @@ ALLOWED_HOSTS = ['*']#env.list('ALLOWED_HOSTS')
 
 
 
-# Application definition 1
+# Application definition 1xx
 
 INSTALLED_APPS = [
     'crispy_forms',
