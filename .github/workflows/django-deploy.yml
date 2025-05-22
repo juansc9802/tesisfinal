@@ -39,9 +39,15 @@ jobs:
       run: |
         python manage.py collectstatic --noinput
 
+    - name: Check directory contents before zip
+      run: ls -la
+
     - name: Zip artifact for deployment
       run: |
         zip -r app.zip . -x "*.git*" "*/__pycache__/*" "*.github*"
+
+    - name: List zip contents
+      run: unzip -l app.zip
 
     - name: Deploy to Azure Web App
       uses: azure/webapps-deploy@v2
