@@ -34,7 +34,9 @@ DEBUG = True #env.bool('DEBUG', default=False)
 
 ALLOWED_HOSTS = ['*']#env.list('ALLOWED_HOSTS')
 
-
+CSRF_TRUSTED_ORIGINS = [
+    "https://againu-azexfkhxa6hffac4.canadacentral-01.azurewebsites.net",
+]
 
 # Application definition 1xxxxxczczc
 
