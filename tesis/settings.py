@@ -89,7 +89,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'tesis.wsgi.application'
 
 
-# Databasesss
+# Databasesss2
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
