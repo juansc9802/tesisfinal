@@ -1,1 +1,1 @@
-web: gunicorn tesis.wsgi:application --bind=0.0.0.0 --timeout 600
+web: gunicorn tesis.wsgi:application --bind 0.0.0.0:$PORT
