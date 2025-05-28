@@ -149,8 +149,8 @@ def create_checkout_session(request):
                     },
                 ],
                 mode='payment',
-                success_url=f'http://localhost:8000/success/?producto_id={producto.id}',
-                cancel_url='http://localhost:8000/cancel/',
+                success_url=f'https://againu-azexfkhxa6hffac4.canadacentral-01.azurewebsites.net/success/?producto_id={producto.id}',
+                cancel_url='https://againu-azexfkhxa6hffac4.canadacentral-01.azurewebsites.net/cancel/',
             )
             return HttpResponseRedirect(checkout_session.url)
 
